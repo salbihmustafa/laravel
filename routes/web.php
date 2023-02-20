@@ -40,9 +40,9 @@ Route::get('/posts/{id}', function ($postId) use ($posts) {
     return view('posts.show', ['post' => $posts[$postId]]);
 })->name('posts.show');
 
-Route::get('recent-posts/{days_ago?}', function ($daysAgo = 20) {
+Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
     return "Posts from " . $daysAgo . " days ago";
-})->name('posts.recent.index');
+})->name('posts.recent.index')->middleware('auth');
 
 Route::prefix('/fun')->name('fun.')->group(function () use ($posts) {
     Route::get('/responses', function () use ($posts) {
