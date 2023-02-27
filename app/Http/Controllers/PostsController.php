@@ -24,7 +24,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -35,7 +35,13 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new BlogPost(); //create model instance
+
+        $post->title = $request->input('title'); //store form input title to the model
+        $post->content = $request->input('content'); //store form input content to the model
+        $post->save(); //this saves into the database
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**

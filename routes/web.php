@@ -22,7 +22,7 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact')
 Route::get('/single', AboutController::class);
 
 //first parameter is route name
-Route::resource('posts', PostsController::class)->only(['index', 'show']);
+Route::resource('posts', PostsController::class)->only(['index', 'show', 'create', 'store']);
 
 Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
     return "Posts from " . $daysAgo . " days ago";
