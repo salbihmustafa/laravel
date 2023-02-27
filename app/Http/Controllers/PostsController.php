@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BlogPost;
+use App\Http\Requests\StorePost;
 
 class PostsController extends Controller
 {
@@ -33,16 +34,13 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
-        $request->validate([
-           'title' => 'bail|required|min:5|max:100',
-           'content' => 'required|min:10'
-        ]);
+        $validated = $request->validated(); //validated is from StorePost request and uses FormRequest library.
         $post = new BlogPost(); //create model instance
 
-        $post->title = $request->input('title'); //store form input title to the model
-        $post->content = $request->input('content'); //store form input content to the model
+        $post->title = $validated['title'];
+        $post->content = $validated['content'];
         $post->save(); //this saves into the database
 
         return redirect()->route('posts.show', ['post' => $post->id]);
