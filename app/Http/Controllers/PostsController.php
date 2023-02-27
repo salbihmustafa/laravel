@@ -43,6 +43,8 @@ class PostsController extends Controller
         $post->content = $validated['content'];
         $post->save(); //this saves into the database
 
+        $request->session()->flash('status', 'The blog post has been saved!');
+
         return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
