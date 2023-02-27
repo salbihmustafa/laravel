@@ -35,6 +35,10 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+           'title' => 'bail|required|min:5|max:100',
+           'content' => 'required|min:10'
+        ]);
         $post = new BlogPost(); //create model instance
 
         $post->title = $request->input('title'); //store form input title to the model
