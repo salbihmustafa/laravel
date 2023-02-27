@@ -37,10 +37,8 @@ class PostsController extends Controller
     public function store(StorePost $request)
     {
         $validated = $request->validated(); //validated is from StorePost request and uses FormRequest library.
-        $post = new BlogPost(); //create model instance
+        $post = BlogPost::create($validated);
 
-        $post->title = $validated['title'];
-        $post->content = $validated['content'];
         $post->save(); //this saves into the database
 
         $request->session()->flash('status', 'The blog post has been saved!');
