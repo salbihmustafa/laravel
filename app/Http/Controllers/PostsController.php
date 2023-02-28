@@ -75,9 +75,16 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePost $request, $id)
     {
-        //
+        $post = BlogPost::findOrFail($id);
+        $validated = $request->validated(); //validated is from StorePost request and uses FormRequest library.
+        $post->fill($validated); //mass fill fields for updating $post
+        $post->save();
+
+        $request->session()->flash('status', 'Blog post was updated!');
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
