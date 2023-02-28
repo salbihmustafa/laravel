@@ -43,7 +43,7 @@ class PostsController extends Controller
 
         $request->session()->flash('status', 'The blog post has been saved!');
 
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        return redirect()->route('posts.show', ['post' => $post->id]); //'post' in this is posts/{post}
     }
 
     /**
@@ -95,6 +95,11 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+        $post = BlogPost::findOrFail($id);
+        $post->delete();
+
+        session()->flash('status', 'Blog post was deleted!'); //you can access session with the session helper
+
+        return redirect()->route('posts.index'); //redirect to show all posts
     }
 }
